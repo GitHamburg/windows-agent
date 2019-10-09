@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/freedomkk-qfeng/windows-agent/g"
+	"github.com/GitHamburg/windows-agent/g"
 )
 
 func configHealthRoutes() {

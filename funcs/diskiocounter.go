@@ -50,7 +50,7 @@ func PerfFormattedData_IDLE() ([]Win32_PerfFormattedData_IDLE, error) {
 
 	var dst []Win32_PerfFormattedData_IDLE
 
-	err := wmi.Query("SELECT PercentIdleTime FROM Win32_PerfFormattedData_PerfDisk_PhysicalDisk ", &dst)
+	err := wmi.Query("SELECT Name,PercentIdleTime FROM Win32_PerfFormattedData_PerfDisk_PhysicalDisk ", &dst)
 
 	return dst, err
 }

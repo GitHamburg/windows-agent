@@ -5,7 +5,7 @@ import (
 
 	"time"
 
-	"github.com/freedomkk-qfeng/windows-agent/g"
+	"github.com/GitHamburg/windows-agent/g"
 	"github.com/open-falcon/common/model"
 )
 

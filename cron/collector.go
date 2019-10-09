@@ -3,8 +3,8 @@ package cron
 import (
 	"time"
 
-	"github.com/freedomkk-qfeng/windows-agent/funcs"
-	"github.com/freedomkk-qfeng/windows-agent/g"
+	"github.com/GitHamburg/windows-agent/funcs"
+	"github.com/GitHamburg/windows-agent/g"
 	"github.com/open-falcon/common/model"
 )
 
