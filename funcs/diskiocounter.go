@@ -2,6 +2,8 @@ package funcs
 
 import (
 	"github.com/StackExchange/wmi"
+	"log"
+	"github.com/GitHamburg/windows-agent/g"
 )
 
 type Win32_PerfFormattedData struct {
@@ -74,7 +76,15 @@ func IOCounters() (map[string]diskIOCounter, error) {
 			}
 		}
 	}
+	if g.Config().Debug {
+		log.Println("PerfFormattedData")
+		log.Println(ret)
+	}
 	dstIdle, err := PerfFormattedData_IDLE()
+	if g.Config().Debug {
+		log.Println("dstIdle")
+		log.Println(dstIdle)
+	}
 	if err == nil {
 		for _, dd := range dstIdle {
 			if dd.Name == "_Total" {

@@ -13,8 +13,18 @@ import (
 func net_status(ifacePrefix []string) ([]net.IOCountersStat, error) {
 	net_iocounter, err := net.IOCounters(true)
 	netIfs := []net.IOCountersStat{}
+	if g.Config().Debug {
+		log.Println("net_iocounter")
+		log.Println(net_iocounter)
+	}
 	for _, iface := range ifacePrefix {
+		if g.Config().Debug {
+			log.Println("ifacePrefix"," - ",iface)
+		}
 		for _, netIf := range net_iocounter {
+			if g.Config().Debug {
+				log.Println("iface"," - ",netIf.Name)
+			}
 			if strings.Contains(netIf.Name, iface) {
 				netIfs = append(netIfs, netIf)
 			}
