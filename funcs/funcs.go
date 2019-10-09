@@ -23,6 +23,7 @@ func BuildMappers() {
 				MemMetrics,
 				DeviceMetrics,
 				DiskIOMetrics,
+				DiskIOPhysicalMetrics,
 				TcpipMetrics,
 			},
 			Interval: interval,
