@@ -18,7 +18,9 @@ func in_array_iis(a string, array []string) bool {
 
 func iisMetrics() (L []*model.MetricValue) {
 	if !g.Config().IIs.Enabled {
-		g.Logger().Println("IIs Monitor is disabled")
+		if g.Config().Debug {
+			g.Logger().Println("IIs Monitor is disabled")
+		}
 		return
 	}
 	websites := g.Config().IIs.Websites

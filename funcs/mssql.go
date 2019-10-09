@@ -20,7 +20,9 @@ type mssql struct {
 
 func mssqlMetrics() (L []*model.MetricValue) {
 	if !g.Config().MsSQL.Enabled {
-		g.Logger().Println("MsSQL Monitor is disabled")
+		if g.Config().Debug {
+			g.Logger().Println("MsSQL Monitor is disabled")
+		}
 		return
 	}
 
