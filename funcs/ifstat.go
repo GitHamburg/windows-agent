@@ -6,8 +6,7 @@ import (
 	"github.com/GitHamburg/windows-agent/g"
 	"github.com/open-falcon/common/model"
 	"github.com/shirou/gopsutil/net"
-	"github.com/chain-zhang/pinyin"
-	"log"
+	"github.com/Lofanmi/pinyin-golang/pinyin"
 )
 
 func net_status(ifacePrefix []string) ([]net.IOCountersStat, error) {
@@ -36,13 +35,7 @@ func CoreNetMetrics(ifacePrefix []string) (L []*model.MetricValue) {
 	}
 
 	for _, netIf := range netIfs {
-		netIfName, err := pinyin.New(netIf.Name).Split("").Mode(pinyin.InitialsInCapitals).Convert()
-		if err != nil {
-			// 错误处理
-			log.Println(err)
-		}else{
-			log.Println(netIfName)
-		}
+		netIfName := pinyin.NewDict().Convert(netIf.Name, "_").None()
 		iface := "iface=" + netIfName
 		L = append(L, CounterValue("net.if.in.bytes", netIf.BytesRecv, iface)) //此处乘以8即为bit的流量
 		L = append(L, CounterValue("net.if.in.packets", netIf.PacketsRecv, iface))
