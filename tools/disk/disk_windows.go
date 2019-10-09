@@ -10,6 +10,8 @@ import (
 	"github.com/GitHamburg/windows-agent/tools/wmi"
 
 	"github.com/GitHamburg/windows-agent/tools/internal/common"
+	"log"
+	"github.com/GitHamburg/windows-agent/g"
 )
 
 var (
@@ -151,5 +153,29 @@ func DiskIOCounters() (map[string]DiskIOCountersStat, error) {
 			WriteTime:  d.AvgDisksecPerWrite,
 		}
 	}
+	if g.Config().Debug {
+		log.Println("PerfFormattedData")
+		log.Println(ret)
+	}
+
+	dstIdle, err := PerfFormattedData_IDLE()
+	if g.Config().Debug {
+		log.Println("dstIdle")
+		log.Println(dstIdle)
+	}
 	return ret, nil
+}
+
+type Win32_PerfFormattedData_IDLE struct {
+	Name            string
+	PercentIdleTime uint64
+}
+
+func PerfFormattedData_IDLE() ([]Win32_PerfFormattedData_IDLE, error) {
+
+	var dst []Win32_PerfFormattedData_IDLE
+
+	err := wmi.Query("SELECT Name,PercentIdleTime FROM Win32_PerfFormattedData_PerfDisk_PhysicalDisk ", &dst)
+
+	return dst, err
 }
