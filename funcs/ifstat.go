@@ -42,10 +42,12 @@ func CoreNetMetrics(ifacePrefix []string) (L []*model.MetricValue) {
 	}
 
 	for _, netIf := range netIfs {
-		netIfName := pinyin.NewDict().Convert(strings.Replace(netIf.Name, " ", "_", -1), "_").None2()
+		netName := strings.Replace(netIf.Name, " ", "_", -1)
+		netIfName := pinyin.NewDict().Convert(netName, "_").None2()
 		iface := "iface=" + netIfName
 		if g.Config().Debug {
-			log.Println(netIf.Name," - ",netIfName)
+			log.Println(netIf.Name)
+			log.Println(netIfName," - ",netIfName)
 		}
 		L = append(L, CounterValue("net.if.in.bytes", netIf.BytesRecv, iface)) //此处乘以8即为bit的流量
 		L = append(L, CounterValue("net.if.in.packets", netIf.PacketsRecv, iface))
