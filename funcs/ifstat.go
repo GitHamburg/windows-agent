@@ -6,7 +6,7 @@ import (
 	"github.com/GitHamburg/windows-agent/g"
 	"github.com/open-falcon/common/model"
 	"github.com/shirou/gopsutil/net"
-	"github.com/Lofanmi/pinyin-golang/pinyin"
+	"github.com/GitHamburg/pinyin-golang/pinyin"
 	"log"
 )
 
@@ -42,7 +42,7 @@ func CoreNetMetrics(ifacePrefix []string) (L []*model.MetricValue) {
 	}
 
 	for _, netIf := range netIfs {
-		netIfName := pinyin.NewDict().Convert(strings.Replace(netIf.Name, " ", "_", -1), "_").None()
+		netIfName := pinyin.NewDict().Convert(strings.Replace(netIf.Name, " ", "_", -1), "_").None2()
 		iface := "iface=" + netIfName
 		if g.Config().Debug {
 			log.Println(netIf.Name," - ",netIfName)
