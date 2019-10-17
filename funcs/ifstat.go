@@ -43,7 +43,7 @@ func CoreNetMetrics(ifacePrefix []string) (L []*model.MetricValue) {
 
 	for _, netIf := range netIfs {
 		netName := strings.Replace(netIf.Name, " ", "_", -1)
-		netIfName := pinyin.NewDict().Convert(netName, "_").None2()
+		netIfName := pinyin.NewDict().ConvertNone(netName, "_").None2()
 		iface := "iface=" + netIfName
 		if g.Config().Debug {
 			log.Println(netIf.Name)
