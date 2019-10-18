@@ -7,6 +7,7 @@ import (
 
 	"github.com/open-falcon/common/model"
 	"github.com/shirou/gopsutil/disk"
+	"log"
 )
 
 func disk_usage(path string) (*disk.UsageStat, error) {
@@ -38,6 +39,13 @@ func DeviceMetrics() (L []*model.MetricValue) {
 
 		diskTotal += du.Total
 		diskUsed += du.Used
+
+		if g.Config().Debug {
+			log.Println("diskTotal:",diskTotal)
+			log.Println("diskUsed:",diskUsed)
+			log.Println("device:",device)
+			log.Println("du:",du)
+		}
 
 		tags := fmt.Sprintf("mount=%s,fstype=%s", device.Mountpoint, device.Fstype)
 		L = append(L, GaugeValue("df.bytes.total", du.Total, tags))
