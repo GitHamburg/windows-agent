@@ -40,25 +40,29 @@ func DeviceMetrics() (L []*model.MetricValue) {
 		diskTotal += du.Total
 		diskUsed += du.Used
 
-		if g.Config().Debug {
-			log.Println("diskTotal:",diskTotal)
-			log.Println("diskUsed:",diskUsed)
-			log.Println("device:",device)
-			log.Println("du:",du)
-		}
-
 		tags := fmt.Sprintf("mount=%s,fstype=%s", device.Mountpoint, device.Fstype)
 		L = append(L, GaugeValue("df.bytes.total", du.Total, tags))
 		L = append(L, GaugeValue("df.bytes.used", du.Used, tags))
 		L = append(L, GaugeValue("df.bytes.free", du.Free, tags))
 		L = append(L, GaugeValue("df.bytes.used.percent", du.UsedPercent, tags))
 		L = append(L, GaugeValue("df.bytes.free.percent", 100-du.UsedPercent, tags))
+
+		if g.Config().Debug {
+			log.Println("diskTotal:",diskTotal)
+			log.Println("diskUsed:",diskUsed)
+			log.Println("device:",device)
+			log.Println("du:",du)
+		}
 	}
 
 	if len(L) > 0 && diskTotal > 0 {
 		L = append(L, GaugeValue("df.statistics.total", float64(diskTotal)))
 		L = append(L, GaugeValue("df.statistics.used", float64(diskUsed)))
 		L = append(L, GaugeValue("df.statistics.used.percent", float64(diskUsed)*100.0/float64(diskTotal)))
+	}
+
+	if g.Config().Debug {
+		log.Println("L:",L)
 	}
 
 	return
