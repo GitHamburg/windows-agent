@@ -47,3 +47,12 @@ func WriteBytes(filePath string, b []byte) (int, error) {
 func WriteString(filePath string, s string) (int, error) {
 	return WriteBytes(filePath, []byte(s))
 }
+
+func IsPython(filePath string) (bool) {
+	pythonFile  := filePath[len(filePath)-3:]
+	if( pythonFile==".py"){
+		return true
+	}else {
+		return false
+	}
+}

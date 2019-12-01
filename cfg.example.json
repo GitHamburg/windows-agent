@@ -7,7 +7,8 @@
       "enabled": false,
       "dir": "./plugin",
       "git": "https://github.com/open-falcon/plugin.git",
-      "logs": "./logs"
+      "logs": "./logs",
+      "python": "python"
     },
 	"iis":{
 		"enabled": false,

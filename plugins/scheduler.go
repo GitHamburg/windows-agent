@@ -120,6 +120,10 @@ func PluginRun(plugin *Plugin) {
 		log.Printf("%s(%s) running...", fpath, args)
 	}
 
+	if fileop.IsPython(fpath) {
+		fpath = g.Config().Plugin.Python+" "+fpath
+	}
+
 	var cmd *exec.Cmd
 	if args == "" {
 		cmd = exec.Command(fpath)

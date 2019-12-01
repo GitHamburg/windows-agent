@@ -14,6 +14,7 @@ type PluginConfig struct {
 	Dir     string `json:"dir"`
 	Git     string `json:"git"`
 	LogDir  string `json:"logs"`
+	Python  string `json:"python"`
 }
 
 type MsSQLConfig struct {
