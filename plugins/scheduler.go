@@ -23,7 +23,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/open-falcon/falcon-plus/common/model"
+	"github.com/open-falcon/common/model"
 	"github.com/GitHamburg/windows-agent/g"
 	//"github.com/toolkits/file"
 	//"github.com/toolkits/sys"

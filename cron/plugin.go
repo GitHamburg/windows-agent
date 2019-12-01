@@ -15,7 +15,7 @@
 package cron
 
 import (
-	"github.com/open-falcon/falcon-plus/common/model"
+	"github.com/open-falcon/common/model"
 	"github.com/GitHamburg/windows-agent/g"
 	"github.com/GitHamburg/windows-agent/plugins"
 	//"github.com/toolkits/file"
