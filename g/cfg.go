@@ -9,6 +9,13 @@ import (
 	"github.com/toolkits/file"
 )
 
+type PluginConfig struct {
+	Enabled bool   `json:"enabled"`
+	Dir     string `json:"dir"`
+	Git     string `json:"git"`
+	LogDir  string `json:"logs"`
+}
+
 type MsSQLConfig struct {
 	Enabled  bool     `json:"enabled"`
 	Addr     string   `json:"addr"`
@@ -52,6 +59,7 @@ type GlobalConfig struct {
 	Debug         bool              `json:"debug"`
 	Hostname      string            `json:"hostname"`
 	IP            string            `json:"ip"`
+	Plugin        *PluginConfig     `json:"plugin"`
 	IIs           *IIsConfig        `json:"iis"`
 	MsSQL         *MsSQLConfig      `json:"mssql"`
 	Logfile       string            `json:"logfile"`
