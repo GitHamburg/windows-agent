@@ -25,8 +25,10 @@ import (
 
 	"github.com/open-falcon/falcon-plus/common/model"
 	"github.com/open-falcon/falcon-plus/modules/agent/g"
-	"github.com/toolkits/file"
-	"github.com/toolkits/sys"
+	//"github.com/toolkits/file"
+	//"github.com/toolkits/sys"
+	"github.com/GitHamburg/windows-agent/tools/fileop"
+	"github.com/GitHamburg/windows-agent/tools/sys"
 )
 
 type PluginScheduler struct {
@@ -108,7 +110,7 @@ func PluginRun(plugin *Plugin) {
 	fpath := filepath.Join(g.Config().Plugin.Dir, plugin.FilePath)
 	args := plugin.Args
 
-	if !file.IsExist(fpath) {
+	if !fileop.FileExist(fpath) {
 		log.Printf("no such plugin: %s(%s)", fpath, args)
 		return
 	}
@@ -144,7 +146,7 @@ func PluginRun(plugin *Plugin) {
 	errStr := stderr.String()
 	if errStr != "" {
 		logFile := filepath.Join(g.Config().Plugin.LogDir, plugin.FilePath+"("+plugin.Args+")"+".stderr.log")
-		if _, err = file.WriteString(logFile, errStr); err != nil {
+		if _, err = fileop.WriteString(logFile, errStr); err != nil {
 			log.Printf("[ERROR] write log to %s fail, error: %s\n", logFile, err)
 		}
 	}

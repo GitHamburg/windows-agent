@@ -18,7 +18,7 @@ import (
 	"github.com/open-falcon/falcon-plus/common/model"
 	"github.com/open-falcon/falcon-plus/modules/agent/g"
 	"github.com/open-falcon/falcon-plus/modules/agent/plugins"
-	"github.com/toolkits/file"
+	//"github.com/toolkits/file"
 	"log"
 	"os"
 	"path/filepath"
@@ -26,6 +26,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"github.com/GitHamburg/windows-agent/tools/fileop"
 )
 
 func SyncMinePlugins() {
@@ -107,11 +108,11 @@ func syncMinePlugins() {
 			}
 
 			abs_path := filepath.Join(g.Config().Plugin.Dir, script_path)
-			if !file.IsExist(abs_path) {
+			if !fileop.FileExist(abs_path) {
 				continue
 			}
 
-			if file.IsFile(abs_path) {
+			if fileop.IsFile(abs_path) {
 				filefmt_scripts = append(filefmt_scripts, []string{script_path, args})
 				continue
 			}
