@@ -15,7 +15,7 @@
 package plugins
 
 import (
-	"github.com/open-falcon/falcon-plus/modules/agent/g"
+	"github.com/GitHamburg/windows-agent/g"
 	"io/ioutil"
 	"log"
 	"path/filepath"
