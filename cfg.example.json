@@ -3,6 +3,12 @@
 	"logfile": "windows.log",
     "hostname": "",
     "ip": "",
+    "plugin": {
+      "enabled": false,
+      "dir": "./plugin",
+      "git": "https://github.com/open-falcon/plugin.git",
+      "logs": "./logs"
+    },
 	"iis":{
 		"enabled": false,
 		"websites": [

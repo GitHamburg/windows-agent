@@ -40,7 +40,7 @@ func main() {
 	go cron.InitDataHistory()
 
 	cron.ReportAgentStatus()
-
+	cron.SyncMinePlugins()
 	cron.SyncBuiltinMetrics()
 	cron.SyncTrustableIps()
 	cron.Collect()
