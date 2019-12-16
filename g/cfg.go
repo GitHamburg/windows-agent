@@ -7,6 +7,8 @@ import (
 	"sync"
 
 	"github.com/toolkits/file"
+	"net"
+	"fmt"
 )
 
 type PluginConfig struct {
@@ -108,6 +110,15 @@ func IP() string {
 		ip = LocalIps[0]
 	}
 
+	if ip == "" {
+		ip = GetLocalIp()
+	}
+
+	if ip == "" {
+		log.Println("本地ip为空，退出，请手动配置ip")
+		os.Exit(0)
+	}
+
 	return ip
 }
 
@@ -139,4 +150,29 @@ func ParseConfig(cfg string) {
 	config = &c
 
 	log.Println("read config file:", cfg, "successfully")
+}
+
+func GetLocalIp() (string)  {
+	if Config().IP != "" {
+		return Config().IP
+	}else {
+		addrs, err := net.InterfaceAddrs()
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		for _, address := range addrs {
+
+			// 检查ip地址判断是否回环地址
+			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+				if ipnet.IP.To4() != nil {
+					return ipnet.IP.String();
+				}
+
+			}
+		}
+	}
+	return "";
 }
