@@ -96,6 +96,16 @@ func Hostname() (string, error) {
 	if err != nil {
 		logger.Println("ERROR: os.Hostname() fail", err)
 	}
+
+	if hostname == "" || hostname == "__HOSTNAME__" {
+		hostname = GetLocalIp()
+	}
+
+	if hostname == "" {
+		log.Println("本地hostname为空，退出，请手动配置hostname")
+		os.Exit(0)
+	}
+
 	return hostname, err
 }
 
@@ -110,8 +120,13 @@ func IP() string {
 		ip = LocalIps[0]
 	}
 
-	if ip == "" {
+	if ip == "" || ip == "__HOSTNAME__" {
 		ip = GetLocalIp()
+	}else {
+		if !CheckLocalIp(ip) {
+			log.Println("本地ip不匹配",ip)
+			os.Exit(0)
+		}
 	}
 
 	if ip == "" {
@@ -175,4 +190,31 @@ func GetLocalIp() (string)  {
 		}
 	}
 	return "";
+}
+
+
+func CheckLocalIp(ip string) (bool)  {
+	if net.ParseIP(ip) == nil {
+		//非ip
+		return true;
+	}else {
+		addrs, err := net.InterfaceAddrs()
+
+		if err != nil {
+			fmt.Println(err)
+			return true;
+		}
+
+		for _, address := range addrs {
+
+			// 检查ip地址判断是否回环地址
+			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+				if ipnet.IP.To4() != nil && ipnet.IP.String() == ip {
+					return true;
+				}
+
+			}
+		}
+	}
+	return false;
 }
