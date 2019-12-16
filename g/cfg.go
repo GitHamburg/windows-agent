@@ -102,7 +102,7 @@ func Hostname() (string, error) {
 	}
 
 	if hostname == "" {
-		log.Println("本地hostname为空，退出，请手动配置hostname")
+		log.Println("本地hostname为空，退出，请手动配置hostname！")
 		os.Exit(0)
 	}
 
@@ -115,7 +115,7 @@ func IP() string {
 		// use ip in configuration
 
 		if !CheckLocalIp(ip) {
-			log.Println("本地ip不匹配",ip)
+			log.Println("本地ip不匹配",ip,"准备退出！")
 			os.Exit(0)
 		}
 
@@ -131,7 +131,7 @@ func IP() string {
 	}
 
 	if ip == "" {
-		log.Println("本地ip为空，退出，请手动配置ip")
+		log.Println("本地ip为空，退出，请手动配置ip！")
 		os.Exit(0)
 	}
 
