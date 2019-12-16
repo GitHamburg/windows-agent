@@ -11,6 +11,7 @@ import (
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/net"
 	"github.com/toolkits/slice"
+	"github.com/cip-agent/g"
 )
 
 var (
@@ -34,6 +35,7 @@ func InitLog() {
 	}
 	logger = log.New(logFile, "[Debug]", log.LstdFlags)
 	log.Println("logging on", fileName)
+	log.Println("本地ip",g.IP())
 }
 
 func Logger() *log.Logger {
