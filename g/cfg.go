@@ -88,7 +88,7 @@ func Config() *GlobalConfig {
 
 func Hostname() (string, error) {
 	hostname := Config().Hostname
-	if hostname != "" {
+	if hostname != "" && hostname != "__HOSTNAME__" {
 		return hostname, nil
 	}
 
@@ -111,8 +111,14 @@ func Hostname() (string, error) {
 
 func IP() string {
 	ip := Config().IP
-	if ip != "" {
+	if ip != "" && ip != "__HOSTNAME__" {
 		// use ip in configuration
+
+		if !CheckLocalIp(ip) {
+			log.Println("本地ip不匹配",ip)
+			os.Exit(0)
+		}
+
 		return ip
 	}
 
@@ -122,11 +128,6 @@ func IP() string {
 
 	if ip == "" || ip == "__HOSTNAME__" {
 		ip = GetLocalIp()
-	}else {
-		if !CheckLocalIp(ip) {
-			log.Println("本地ip不匹配",ip)
-			os.Exit(0)
-		}
 	}
 
 	if ip == "" {
