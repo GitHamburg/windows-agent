@@ -11,7 +11,7 @@ import (
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/net"
 	"github.com/toolkits/slice"
-	"github.com/cip-agent/g"
+	"github.com/GitHamburg/cip-agent/g"
 )
 
 var (
