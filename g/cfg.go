@@ -169,7 +169,7 @@ func ParseConfig(cfg string) {
 }
 
 func GetLocalIp() (string)  {
-	if Config().IP != "" {
+	if Config().IP != "" && Config().IP != "__HOSTNAME__" {
 		return Config().IP
 	}else {
 		addrs, err := net.InterfaceAddrs()
