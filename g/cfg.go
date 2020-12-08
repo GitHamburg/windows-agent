@@ -9,6 +9,9 @@ import (
 	"github.com/toolkits/file"
 	"net"
 	"fmt"
+	"os/exec"
+	"io/ioutil"
+	"strings"
 )
 
 type PluginConfig struct {
@@ -172,25 +175,59 @@ func GetLocalIp() (string)  {
 	if Config().IP != "" && Config().IP != "__HOSTNAME__" {
 		return Config().IP
 	}else {
-		addrs, err := net.InterfaceAddrs()
-
-		if err != nil {
+		var finalIp string
+		cmd := exec.Command("cmd","/c","ipconfig")
+		if out, err := cmd.StdoutPipe(); err != nil {
 			fmt.Println(err)
-			os.Exit(1)
-		}
+		}else{
+			defer out.Close()
+			if err := cmd.Start(); err != nil {
+				fmt.Println(err)
+			}
 
-		for _, address := range addrs {
+			if opBytes, err := ioutil.ReadAll(out); err != nil {
+				log.Fatal(err)
+			} else {
+				str:= string(opBytes)
 
-			// 检查ip地址判断是否回环地址
-			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-				if ipnet.IP.To4() != nil {
-					return ipnet.IP.String();
+				var strs = strings.Split(str,"\r\n")
+
+				if 0 != len(strs){
+					var havingFinalIp4 bool = false
+					var cnt int = 0
+					for index,value := range strs{
+						vidx := strings.Index(value,"IPv4")
+						//说明已经找到该ip
+						if vidx != -1{
+							ip4lines := strings.Split(value,":")
+							if len(ip4lines) == 2{
+								cnt = index
+								havingFinalIp4 = true
+								ip4str := ip4lines[1]
+								finalIp = strings.TrimSpace(ip4str)
+							}
+
+						}
+						if havingFinalIp4 && index == cnt +2{
+							lindex := strings.Index(value,":")
+							if -1 != lindex{
+								lines := strings.Split(value,":")
+								if len(lines) == 2{
+									fip := lines[1]
+									if strings.TrimSpace(fip) != ""{
+										break
+									}
+								}
+							}
+							havingFinalIp4 = false
+							finalIp = ""
+						}
+					}
 				}
-
 			}
 		}
+		return finalIp
 	}
-	return "";
 }
 
 
