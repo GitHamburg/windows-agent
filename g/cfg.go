@@ -138,6 +138,10 @@ func IP() string {
 		os.Exit(0)
 	}
 
+	if len(LocalIps) == 0 {
+		LocalIps = append(LocalIps, ip)
+	}
+
 	return ip
 }
 

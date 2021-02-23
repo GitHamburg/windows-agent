@@ -31,6 +31,11 @@ func TcpipMetrics() (L []*model.MetricValue) {
 		return
 	}
 
+	if len(ds) == 0 {
+		log.Println("Get tcpip data fail, ds empty: ", err)
+		return
+	}
+
 	L = append(L, CounterValue("tcpip.confailures", ds[0].ConFailures))
 	L = append(L, CounterValue("tcpip.conactive", ds[0].ConActive))
 	L = append(L, CounterValue("tcpip.conpassive", ds[0].ConPassive))
