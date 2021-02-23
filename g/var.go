@@ -49,7 +49,7 @@ func InitLocalIps() {
 	var err error
 	LocalIps, err = net.IntranetIP()
 	if err != nil {
-		logger.Fatalln("get intranet ip fail:", err)
+		logger.Println("get intranet ip fail:", err)
 	}
 }
 
